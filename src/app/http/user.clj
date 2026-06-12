@@ -1,16 +1,10 @@
 (ns app.http.user 
-    (:require [clj-http.client :as client] [cheshire.core :as json])
+    (:require [app.http.conf :refer :all] [clj-http.client :as client] [cheshire.core :as json])
 )
 
-(def HOST "192.168.0.29")
-(def PORT 3000 )
-(def URI (format "http://%s:%d" HOST PORT))
-
-(def OK 200)
-
-(defn get_usuario []
+(defn obter_usuario []
   (let [response (client/get (str URI "/usuario"))]
-    (if (= (:status response) OK)
+    (if (OK? (:status response) )
         (json/parse-string (:body response) true)
         nil
     )
